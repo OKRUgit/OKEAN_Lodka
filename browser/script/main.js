@@ -1,8 +1,14 @@
-llet connected = false;
+let connected = false;
 let serverIP = "192.168.4.1";
 let devicePassword = "";
 
-// DOM-элементы
+// DOM-элементы — добавим новые
+const deviceStatus = document.getElementById('deviceStatus');
+const currentNetwork = document.getElementById('currentNetwork');
+const deviceIP = document.getElementById('deviceIP');
+const scanBtn = document.getElementById('scanBtn');
+const startAPBtn = document.getElementById('startAPBtn');
+
 const setupSection = document.querySelector('.setup');
 const controlPanel = document.getElementById('controlPanel');
 const status = document.querySelector('.status');
@@ -11,69 +17,71 @@ const passwordInput = document.getElementById('devicePassword');
 const connectBtn = document.getElementById('connectBtn');
 const backBtn = document.getElementById('backBtn');
 
-// Кнопка "Подключиться"
-connectBtn.onclick = function () {
-  serverIP = serverIPInput.value.trim();
-  devicePassword = passwordInput.value.trim();
-
-  if (!serverIP) {
-    alert("Введите IP-адрес сервера!");
-    return;
-  }
-
-  status.textContent = "Проверка пароля...";
+// Эмуляция: статус Wi-Fi
+function updateWiFiStatus() {
+  status.textContent = "Запрос статуса...";
   status.style.color = "orange";
 
-  // Эмуляция проверки (в будущем — реальный запрос к ESP)
+  // Эмуляция задержки — как будто идёт запрос к ESP
   setTimeout(() => {
-    if (devicePassword === "okean") {  // Простой пароль для теста
-      status.textContent = "✅ Подключено!";
-      status.style.color = "green";
-      setupSection.style.display = "none";
-      controlPanel.style.display = "block";
-      connected = true;
-    } else {
-      status.textContent = "❌ Неверный пароль";
-      status.style.color = "red";
-      setTimeout(() => {
-        status.textContent = "Не подключено";
-        status.style.color = "black";
-      }, 2000);
-    }
-  }, 1000);
-};
+    // Случайный режим: либо STA (подключён к сети), либо AP (своя сеть)
+    const modes = [
+      { status: "Режим: STA", network: "HomeNet", ip: "192.168.1.105" },
+      { status: "Режим: AP", network: "OKEAN_Lodka", ip: "192.168.4.1" },
+      { status: "Нет подключения", network: "—", ip: "—" }
+    ];
+    const mode = modes[Math.floor(Math.random() * modes.length)];
 
-// Кнопка "Назад"
-backBtn.onclick = function () {
-  controlPanel.style.display = "none";
-  setupSection.style.display = "block";
-  connected = false;
-  status.textContent = "Не подключено";
-  status.style.color = "black";
-};
+    deviceStatus.textContent = mode.status;
+    currentNetwork.textContent = mode.network;
+    deviceIP.textContent = mode.ip;
 
-// Отправка команды
-function sendCommand(command) {
-  if (!connected) return;
-
-  console.log(`Отправка: ${serverIP}/${command}`);
-  fetch(`http://${serverIP}/${command}`, {
-    method: "GET",
-    mode: "cors",  // пока для теста, позже может потребоваться настройка ESP
-  })
-  .then(response => {
-    if (response.ok) {
-      console.log("Команда выполнена");
-    } else {
-      console.warn("Ошибка:", response.status);
-    }
-  })
-  .catch(err => {
-    console.error("Ошибка связи:", err);
-    alert("❌ Нет связи с сервером. Проверьте Wi-Fi и IP.");
-  });
+    status.textContent = "Готово";
+    status.style.color = "green";
+  }, 1200);
 }
 
+// Эмуляция: сканирование сетей
+scanBtn.onclick = function () {
+  scanBtn.disabled = true;
+  scanBtn.textContent = "Сканирую...";
+
+  setTimeout(() => {
+    alert("Сканирование завершено!\n\n(Это эмуляция. В реальности: HomeNet, WiFi_Guest, OKEAN_Test)");
+    scanBtn.disabled = false;
+    scanBtn.textContent = "Обновить сети";
+    // Можно обновить статус
+    updateWiFiStatus();
+  }, 1500);
+};
+
+// Эмуляция: запуск точки доступа
+startAPBtn.onclick = function () {
+  if (confirm("Запустить режим точки доступа?")) {
+    startAPBtn.disabled = true;
+    status.textContent = "Запуск AP...";
+    status.style.color = "blue";
+
+    setTimeout(() => {
+      deviceStatus.textContent = "Режим: AP";
+      currentNetwork.textContent = "OKEAN_Lodka";
+      deviceIP.textContent = "192.168.4.1";
+      serverIPInput.value = "192.168.4.1";
+      status.textContent = "Точка доступа запущена";
+      status.style.color = "green";
+      startAPBtn.disabled = false;
+    }, 1800);
+  }
+};
+
+// Инициализация — при загрузке
+window.onload = function () {
+  updateWiFiStatus(); // показать статус
+};
+
+// --- Остальной код (подключение, команды) остаётся как был ---
+// (скопируй сюда предыдущий код из connectBtn, sendCommand и т.д.)
+// или я пришлю всё целиком в следующем сообщении
 // Кнопки управления
 document.getElementById("btnOn").onclick = () => sendCommand("led/on");
 document.getElementById("btnOff").onclick = () => sendCommand("led/off");

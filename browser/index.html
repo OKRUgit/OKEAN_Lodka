@@ -7,9 +7,29 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
+
+  <!-- Новый блок: Статус Wi-Fi -->
+  <div class="wifi-status">
+    <h2>📡 Сетевое подключение</h2>
+    <div class="status-row">
+      <strong>Устройство:</strong>
+      <span id="deviceStatus">неизвестно</span>
+    </div>
+    <div class="status-row">
+      <strong>Подключено к:</strong>
+      <span id="currentNetwork">—</span>
+    </div>
+    <div class="status-row">
+      <strong>IP-адрес:</strong>
+      <span id="deviceIP">—</span>
+    </div>
+    <button id="scanBtn">Обновить сети</button>
+    <button id="startAPBtn">Запустить точку доступа</button>
+  </div>
+
   <!-- Блок настроек подключения -->
   <div class="setup">
-    <h2>🔧 Настройка подключения</h2>
+    <h2>🔧 Настройка управления</h2>
     <div>
       <label>IP сервера:</label>
       <input type="text" id="serverIP" placeholder="192.168.4.1" value="192.168.4.1">
@@ -22,7 +42,7 @@
     <div class="status">Статус: не подключено</div>
   </div>
 
-  <!-- Основной интерфейс (пока скрыт) -->
+  <!-- Основной интерфейс (управление) -->
   <div class="control-panel" id="controlPanel" style="display: none;">
     <h1>🌊 OKEAN Лодка — Управление</h1>
     <button id="btnOn" class="on">ВКЛ</button>
