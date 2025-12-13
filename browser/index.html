@@ -4,71 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>OKEAN Лодка</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding: 50px;
-      background: #f0f8ff;
-    }
-    h1 {
-      color: #0066cc;
-    }
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      margin: 10px;
-      cursor: pointer;
-      border: none;
-      border-radius: 8px;
-      width: 150px;
-    }
-    .on {
-      background-color: #4CAF50;
-      color: white;
-    }
-    .off {
-      background-color: #f44336;
-      color: white;
-    }
-    .status {
-      font-size: 20px;
-      margin: 20px;
-      font-weight: bold;
-    }
-  </style>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <h1>🌊 OKEAN Лодка — Управление</h1>
   <div class="status">Статус: не подключено</div>
-  <button id="btnOn">ВКЛ</button>
-  <button id="btnOff">ВЫКЛ</button>
+  <button id="btnOn" class="on">ВКЛ</button>
+  <button id="btnOff" class="off">ВЫКЛ</button>
 
-  <script>
-    // Эмуляция подключения
-    let connected = false;
-
-    // При загрузке страницы
-    window.onload = function() {
-      setTimeout(() => {
-        document.querySelector('.status').textContent = "Статус: готово";
-        document.querySelector('.status').style.color = "green";
-        connected = true;
-      }, 1500);
-    };
-
-    // Клик по кнопкам
-    document.getElementById("btnOn").onclick = function() {
-      if (!connected) return;
-      console.log("Отправить команду: ВКЛ");
-      alert("Команда отправлена: ВКЛ");
-    };
-
-    document.getElementById("btnOff").onclick = function() {
-      if (!connected) return;
-      console.log("Отправить команду: ВЫКЛ");
-      alert("Команда отправлена: ВЫКЛ");
-    };
-  </script>
+  <script src="script/main.js"></script>
 </body>
 </html>
