@@ -1,7 +1,7 @@
-OKEAN_Lodka/
-└── browser/
-    ├── index.html        ← основная страница
+OKEAN_Lodka/\
+└── browser/\
+    ├── index.html        ← основная страница\
     ├── css/
-    │   └── style.css     ← стили отдельно
+    │   └── style.css     ← стили отдельно\
     └── script/
-        └── main.js       ← JavaScript отдельно
+        └── main.js       ← JavaScript отдельно\
