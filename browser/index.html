@@ -7,10 +7,28 @@
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
-  <h1>🌊 OKEAN Лодка — Управление</h1>
-  <div class="status">Статус: не подключено</div>
-  <button id="btnOn" class="on">ВКЛ</button>
-  <button id="btnOff" class="off">ВЫКЛ</button>
+  <!-- Блок настроек подключения -->
+  <div class="setup">
+    <h2>🔧 Настройка подключения</h2>
+    <div>
+      <label>IP сервера:</label>
+      <input type="text" id="serverIP" placeholder="192.168.4.1" value="192.168.4.1">
+    </div>
+    <div>
+      <label>Пароль:</label>
+      <input type="password" id="devicePassword" placeholder="введите пароль">
+    </div>
+    <button id="connectBtn">Подключиться</button>
+    <div class="status">Статус: не подключено</div>
+  </div>
+
+  <!-- Основной интерфейс (пока скрыт) -->
+  <div class="control-panel" id="controlPanel" style="display: none;">
+    <h1>🌊 OKEAN Лодка — Управление</h1>
+    <button id="btnOn" class="on">ВКЛ</button>
+    <button id="btnOff" class="off">ВЫКЛ</button>
+    <button id="backBtn">Назад</button>
+  </div>
 
   <script src="script/main.js"></script>
 </body>
